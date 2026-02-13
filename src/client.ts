@@ -1,46 +1,48 @@
+import type { RemoteInfo } from "node:dgram";
 import { WebSocket } from "ws";
 import dgram from "node:dgram";
 
 export async function client(port: number, endpoint: string): Promise<void> {
   const ws: WebSocket = new WebSocket(endpoint);
-  const server = dgram.createSocket("udp4");
+  const udp = dgram.createSocket("udp4");
+  let remoteAddress: RemoteInfo | null = null;
 
   ws.on("open", () => {
-    console.debug("[DEBUG] Connected to server");
+    console.log("[INFO] Connected to WebSocket server");
   });
 
   ws.on("close", () => {
-    console.debug("[DEBUG] Disconnected from server");
+    console.log("[INFO] Disconnected from WebSocket server");
   });
 
   ws.on("error", (err) => {
-    console.error("[ERROR] WS error: ", err);
+    console.error("[ERROR] WebSocket error:", err);
   });
 
-  server.on("connect", () => {
-    console.debug("[DEBUG] Connection to local server");
+  udp.on("error", (err) => {
+    console.error("[ERROR] UDP socket error:", err);
   });
 
-  server.on("close", () => {
-    console.debug("[DEBUG] Disconnection from local server");
-  });
+  udp.on("message", (msg, rinfo) => {
+    remoteAddress = rinfo;
 
-  server.on("error", (err) => {
-    console.error("[ERROR] Local server error: ", err);
-  });
-
-  server.on("message", (msg) => {
-    ws.send(msg);
+    if (ws.readyState === WebSocket.OPEN) {
+      ws.send(msg);
+    }
   });
 
   ws.on("message", (msg) => {
     const buffer = Buffer.isBuffer(msg) ? msg : Buffer.from(msg.toString());
-    server.send(buffer, port, "127.0.0.1");
+
+    if (remoteAddress) {
+      udp.send(buffer, remoteAddress.port, remoteAddress.address);
+    }
   });
 
-  server.bind(port, () => {
+  udp.bind(port, () => {
     console.log(
-      `[INFO] Local server binded to: ${server.address().address}:${server.address().port}`,
+      `[INFO] UDP socket listening on ${udp.address().address}:${udp.address().port}`,
     );
+    console.log("[INFO] Waiting for WireGuard client connection...");
   });
 }

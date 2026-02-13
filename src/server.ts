@@ -39,7 +39,9 @@ export async function server(wsport: number, wgport: number): Promise<void> {
   });
 
   wg.bind(() => {
-    console.info(`[INFO] Local server bound to port: ${wg.address().port}`);
+    console.info(
+      `[INFO] UDP relay bound on port ${wg.address().port} -> forwarding to WG on 127.0.0.1:${wgport}`,
+    );
   });
 
   wg.on("error", (err) => {
