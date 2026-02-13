@@ -1,6 +1,6 @@
 {
-    "name": "wsgows",
-    "version": "1.0.1",
+    "name": "wgows",
+    "version": "1.0.2",
     "type": "module",
     "description": "Wireguard over WebSockets",
     "main": "dist/index.js",
