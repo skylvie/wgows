@@ -1,0 +1,24 @@
+{
+    "name": "wsgows",
+    "type": "module",
+    "description": "Wireguard over WebSockets",
+    "main": "dist/index.js",
+    "scripts": {
+        "build": "tsc"
+    },
+    "bin": {
+        "wgows": "./dist/index.js"
+    },
+    "author": "Sylvie Rain",
+    "license": "MIT",
+    "packageManager": "pnpm@10.29.3",
+    "devDependencies": {
+        "@types/node": "^25.2.3",
+        "@types/ws": "^8.18.1",
+        "typescript": "^5.9.3"
+    },
+    "dependencies": {
+        "commander": "^14.0.3",
+        "ws": "^8.19.0"
+    }
+}
