@@ -15,13 +15,13 @@ wgows c -p 3000 -e wss://wgows.example.com
 ```
 ### Server
 ```sh
-wgows s --wsp 3000 --wgp 51820
-# --wsp = Server port to bind to
-# --wgp = WireGuard port
+wgows s -wsp 3000 -wgp 51820
+# -wsp = Server port to bind to
+# -wgp = WG port
 ```
 
 ## Usage
-In your WireGuard config replace the endpoint with the client endpoint/port
+In your WG config replace the endpoint with the client endpoint/port
 
 ## How?
 TL;DR: WG Client <-> WS Client <-> WS Server <-> WG Server
