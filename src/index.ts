@@ -6,7 +6,7 @@ import { Command } from "commander";
 
 const program = new Command();
 
-program.name("wgows").description("WireGuard over WebSockets").version("1.0.0");
+program.name("wgows").description("WireGuard over WebSockets").version("1.0.1");
 
 program
     .command("client")
@@ -34,11 +34,11 @@ program
     .command("server")
     .alias("s")
     .description("Server")
-    .requiredOption("-wsp, --ws-port <number>", "Server port to bind to")
-    .requiredOption("-wgp, --wg-port <number>", "WireGuard port")
+    .requiredOption("--wsp <number>", "Server port to bind to")
+    .requiredOption("--wgp <number>", "WireGuard port")
     .action(async (opts) => {
-        const wsPort = parseInt(opts.wsPort, 10);
-        const wgPort = parseInt(opts.wgPort, 10);
+        const wsPort = parseInt(opts.wsp, 10);
+        const wgPort = parseInt(opts.wgp, 10);
 
         if (isNaN(wsPort) || isNaN(wgPort)) {
             console.error("[ERROR] Invalid port number");
