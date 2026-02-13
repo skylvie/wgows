@@ -8,15 +8,15 @@ export async function client(port: number, endpoint: string): Promise<void> {
   let remoteAddress: RemoteInfo | null = null;
 
   ws.on("open", () => {
-    console.log("[INFO] Connected to WebSocket server");
+    console.log("[INFO] Connected to WS server");
   });
 
   ws.on("close", () => {
-    console.log("[INFO] Disconnected from WebSocket server");
+    console.log("[INFO] Disconnected from WG server");
   });
 
   ws.on("error", (err) => {
-    console.error("[ERROR] WebSocket error:", err);
+    console.error("[ERROR] WS error:", err);
   });
 
   udp.on("error", (err) => {
@@ -43,6 +43,6 @@ export async function client(port: number, endpoint: string): Promise<void> {
     console.log(
       `[INFO] UDP socket listening on ${udp.address().address}:${udp.address().port}`,
     );
-    console.log("[INFO] Waiting for WireGuard client connection...");
+    console.log("[INFO] Waiting for WG client connection...");
   });
 }

@@ -21,7 +21,10 @@ wgows s -wsp 3000 -wgp 51820
 ```
 
 ## Usage
-In your WG config replace the endpoint with the client endpoint/port
+1. In your WG client config replace the endpoint with the client endpoint/port (e.g. `localhost:3000`)
+2. Make sure you add `Table = off`
+    1. Since the WG client is trying to route all traffic through the local server, you won't be able to access the WS server (infinite loop)
+    2. `Table = off` means you need to specify what gets sent over WG (E.g. `curl --interface wg0 https://api.ipify.org`) 
 
 ## How?
 TL;DR: WG Client <-> WS Client <-> WS Server <-> WG Server

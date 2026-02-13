@@ -6,7 +6,7 @@ export async function server(wsport: number, wgport: number): Promise<void> {
   const wg = dgram.createSocket("udp4");
 
   wss.on("connection", (ws) => {
-    console.debug("[DEBUG] WSS connection");
+    console.debug("[DEBUG] WS server connection");
 
     ws.on("message", (msg) => {
       const buffer = Buffer.isBuffer(msg) ? msg : Buffer.from(msg.toString());
@@ -31,7 +31,7 @@ export async function server(wsport: number, wgport: number): Promise<void> {
   });
 
   wss.on("error", (err) => {
-    console.error("[ERROR] WSS error:", err);
+    console.error("[ERROR] WS server error:", err);
   });
 
   wss.on("listening", () => {
